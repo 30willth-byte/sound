@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    </head>
+    <body>
+        <a-scene>
+             <a-assets>
+      <audio id="soundEffect1" src="sound1.mp3" preload="auto"></audio>
+ </a-assets>
 
+            <a-camera><a-cursor></a-cursor></a-camera>
+        <a-box sound="src: #soundEffect1 on: click"
+
+            position="0 1 -5"
+            depth="2"
+            height="2"
+            width="2"
+            color="tomato">
+        </a-box>
+        </a-scene>
+    </body>
+</html>
