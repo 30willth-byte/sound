@@ -5,19 +5,25 @@
     </head>
     <body>
         <a-scene>
-             <a-assets>
-      <audio id="soundEffect1" src="zippersound.mp3" preload="auto"></audio>
- </a-assets>
+            <a-assets>
+  
+                <audio id="soundEffect1" src="zippersound.mp3" preload="auto"></audio>
+            </a-assets>
 
-            <a-camera><a-cursor></a-cursor></a-camera>
-        <a-box sound="src: #soundEffect1 on: click"
+            <a-camera>
 
-            position="0 1 -5"
-            depth="2"
-            height="2"
-            width="2"
-            color="tomato">
-        </a-box>
+                <a-cursor raycaster="objects: .clickable"></a-cursor>
+            </a-camera>
+
+=
+            <a-box sound="src: #soundEffect1; on: click"
+                   class="clickable"
+                   position="0 1 -5"
+                   depth="2"
+                   height="2"
+                   width="2"
+                   color="tomato">
+            </a-box>
         </a-scene>
     </body>
 </html>
