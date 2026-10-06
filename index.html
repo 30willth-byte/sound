@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
-    </head>
-    <body>
-        <a-scene>
-            <a-assets>
-                <audio id="zip" src="zippersound.mp3" preload="auto"></audio>
-                <audio id="keyboard1" src="keyboard.mp3" preload="auto"></audio>
-            </a-assets>
-<a-entity id="keyboard" sound="src: #keyboard1; loop:true; volume: 1;"></a-entity>
-    
-<a-camera>
+<head>
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+</head>
 
-            <a-cursor></a-cursor>
-            </a-camera>
+<body>
 
-=
-            <a-box sound="src: #zip; on: click; volume 1"
-                   class="clickable"
-                   position="0 1 -5"
-                   depth="2"
-                   height="2"
-                   width="2"
-                   color="tomato">
-            </a-box>
-        </a-scene>
+<a-scene>
+
+    <a-assets>
+        <audio id="zip" src="zippersound.mp3" preload="auto"></audio>
+        <audio id="keyboard1" src="keyboard.mp3" preload="auto"></audio>
+    </a-assets>
+
+    <!-- Background keyboard sound -->
+    <a-entity
+        id="keyboard"
+        sound="src: #keyboard1; loop: true; volume: 1;">
+    </a-entity>
+
+    <a-camera>
+        <a-cursor></a-cursor>
+    </a-camera>
+
+    <!-- Clickable box -->
+    <a-box
+        class="clickable"
+        position="0 1 -5"
+        depth="2"
+        height="2"
+        width="2"
+        color="tomato"
+        sound="src: #zip; on: click; volume: 1;">
+    </a-box>
+
+</a-scene>
+
 <script>
-      document.addEventListener('DOMContentLoaded', () => {
-      const scene = document.querySelector('a-scene');
-      const music = document.querySelector('#music');
+document.addEventListener('DOMContentLoaded', () => {
 
-      const startMusic = () => {
-      music.components.sound.playSound();
+    const scene = document.querySelector('a-scene');
+    const music = document.querySelector('#keyboard');
+
+    const startMusic = () => {
+        music.components.sound.playSound();
     };
 
-    // Fires once on the first user interaction
-    scene.addEventListener('mousemove', startMusic, { once: true });
-    window.addEventListener('touchstart', startMusic, { once: true });
-  });
+    // Start keyboard sound after the user's first click
+    scene.addEventListener('click', startMusic, { once: true });
+});
 </script>
 
-
-
-
-
-        
-    </body>
+</body>
 </html>
