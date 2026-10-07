@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
 </head>
-
 <body>
-
-<a-scene>
-
+  <a-scene>
     <a-assets>
-        <audio id="zip" src="zippersound.mp3" preload="auto"></audio>
-        <audio id="keyboard1" src="keyboard.mp3" preload="auto"></audio>
+      <audio id="zip" src="zippersound.mp3" preload="auto"></audio>
+      <audio id="keyboard1" src="keyboard.mp3" preload="auto"></audio>
     </a-assets>
 
-    <!-- Background keyboard sound -->
-    <a-entity
-        id="keyboard"
-        sound="src: #keyboard1; loop: true; volume: 1;">
-    </a-entity>
+    
+    
 
     <a-camera>
-        <a-cursor></a-cursor>
+      <!-- Added raycaster configuration so the cursor can actually click the box -->
+      <a-cursor raycaster="objects: .clickable"></a-cursor>
     </a-camera>
 
     <!-- Clickable box -->
-    <a-box
-        class="clickable"
-        position="0 1 -5"
-        depth="2"
-        height="2"
-        width="2"
-        color="tomato"
-        sound="src: #zip; on: click; volume: 1;">
+    <a-box class="clickable" position="0 1 -5" depth="2" height="2" width="2" color="tomato" 
+           sound="src: #zip; on: click; volume: 1;">
     </a-box>
+  </a-scene>
 
-</a-scene>
+  <script>
+    const scene = document.querySelector('a-scene');
+    
+    // 1. Target the , not the <audio> asset
+    const keyboardEntity = document.querySelector('#keyboard');
 
-<script>
-      document.addEventListener('DOMContentLoaded', () => {
-      const scene = document.querySelector('a-scene');
-      const music = document.querySelector('#keyboard1');
-
-      const startMusic = () => {
-      music.components.sound.playSound();
+    const startMusic = () => {
+      // Safety check to ensure the sound component exists before playing
+      if (keyboardEntity.components.sound) {
+        keyboardEntity.components.sound.playSound();
+      }
     };
 
-    // Fires once on the first user interaction
-    scene.addEventListener('mousemove', startMusic, { once: true });
-    window.addEventListener('touchstart', startMusic, { once: true });
-  });
-</script>
-
-
+    // 2. Wait for the A-Frame scene to fully load components before listening for interactions
+    scene.addEventListener('loaded', () => {
+      // Use 'click' or 'keydown' rather than 'mousemove' to reliably bypass browser autoplay blocks
+      window.addEventListener('click', startMusic, { once: true });
+      window.addEventListener('touchstart', startMusic, { once: true });
+    });
+  </script>
 </body>
 </html>
