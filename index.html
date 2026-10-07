@@ -37,19 +37,20 @@
 </a-scene>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', () => {
+      const scene = document.querySelector('a-scene');
+      const music = document.querySelector('#music');
 
-    const scene = document.querySelector('a-scene');
-    const music = document.querySelector('#keyboard');
-
-    const startMusic = () => {
-        music.components.sound.playSound();
+      const startMusic = () => {
+      music.components.sound.playSound();
     };
 
-    // Start keyboard sound after the user's first click
-    scene.addEventListener('click', startMusic, { once: true });
-});
+    // Fires once on the first user interaction
+    scene.addEventListener('mousemove', startMusic, { once: true });
+    window.addEventListener('touchstart', startMusic, { once: true });
+  });
 </script>
+
 
 </body>
 </html>
